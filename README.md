@@ -19,3 +19,20 @@ cargo run --release -- <day>
 ```
 
 The program will read the input from `input/dayXX.txt` and print the solutions for both parts of the challenge.
+
+## Merry Christmas! 🎄
+
+```
+         *
+        /_\
+       /o__\
+      /___o_\
+     /_o_o___\
+    /___o___o_\
+   /o_______o__\
+  /______o______\
+ /_o___o_____o___\
+/_________________\
+        | |
+        | |
+```
