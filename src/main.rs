@@ -2,6 +2,7 @@ use std::env;
 use std::fs;
 
 mod day01;
+mod day02;
 
 trait Day {
     fn part_one(&self, input: &str);
@@ -29,7 +30,7 @@ fn main() {
     let input = fs::read_to_string(&input_file).expect("Unable to read file");
 
     // Create a constant array of boxed trait objects
-    const DAYS: [&(dyn Day + 'static); 1] = [&day01::Day01];
+    const DAYS: [&(dyn Day + 'static); 2] = [&day01::Day01, &day02::Day02];
 
     // Call the appropriate functions based on the day
     if day < DAYS.len() {
