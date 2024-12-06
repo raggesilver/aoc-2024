@@ -10,13 +10,14 @@ lazy_static! {
 
 impl Day for Day03 {
     fn part_one(&self, input: &str) {
-        let oprs = MUL_REGEX.captures_iter(input);
+        let operations = MUL_REGEX.captures_iter(input);
 
         let mut total: i32 = 0;
 
-        for opr in oprs {
-            let a = opr[1].parse::<i32>().unwrap();
-            let b = opr[2].parse::<i32>().unwrap();
+        for opr in operations {
+            let (_, [a, b]) = opr.extract();
+            let a: i32 = a.parse().unwrap();
+            let b: i32 = b.parse().unwrap();
             total += a * b;
         }
 
@@ -29,32 +30,36 @@ impl Day for Day03 {
 
         let mut i: usize = 0;
         while i < input.len() {
-            if input.chars().nth(i) == Some('d') {
-                if input[i..].starts_with("don't()") {
-                    valid = false;
-                    i += 7;
-                    continue;
-                } else if input[i..].starts_with("do()") {
-                    valid = true;
-                    i += 4;
-                    continue;
-                }
-            } else if input.chars().nth(i) == Some('m') {
-                if let Some(caps) = MUL_REGEX.captures(&input[i..i + 13]) {
-                    let a = caps.get(1).unwrap().as_str().parse::<i32>().unwrap();
-                    let b = caps.get(2).unwrap().as_str().parse::<i32>().unwrap();
-
-                    if valid {
-                        total += a * b;
+            match input.as_bytes()[i] {
+                b'd' => {
+                    if input[i..].starts_with("don't()") {
+                        valid = false;
+                        i += 7;
+                        continue;
+                    } else if input[i..].starts_with("do()") {
+                        valid = true;
+                        i += 4;
+                        continue;
                     }
-
-                    i += caps.get(0).unwrap().as_str().len();
-                    continue;
                 }
+                b'm' => {
+                    if let Some(caps) = MUL_REGEX.captures(&input[i..i + 13]) {
+                        let (full, [a, b]) = caps.extract();
+                        let a: i32 = a.parse().unwrap();
+                        let b: i32 = b.parse().unwrap();
+
+                        if valid {
+                            total += a * b;
+                        }
+                        i += full.len();
+                        continue;
+                    }
+                }
+                _ => {}
             }
             i += 1;
         }
 
-        println!("Day 03, Part 1: {}", total);
+        println!("Day 03, Part 2: {}", total);
     }
 }
