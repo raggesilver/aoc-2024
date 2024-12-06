@@ -4,6 +4,7 @@ use std::fs;
 mod day01;
 mod day02;
 mod day03;
+mod day04;
 
 trait Day {
     fn part_one(&self, input: &str);
@@ -31,7 +32,8 @@ fn main() {
     let input = fs::read_to_string(&input_file).expect("Unable to read file");
 
     // Create a constant array of boxed trait objects
-    const DAYS: [&(dyn Day + 'static); 3] = [&day01::Day01, &day02::Day02, &day03::Day03];
+    const DAYS: [&(dyn Day + 'static); 4] =
+        [&day01::Day01, &day02::Day02, &day03::Day03, &day04::Day04];
 
     // Call the appropriate functions based on the day
     if day < DAYS.len() {
